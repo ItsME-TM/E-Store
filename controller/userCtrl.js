@@ -48,7 +48,32 @@ const getAllUsers = asyncHandler(async(req, res) => {
         catch(error){
                 throw new Error(error);
         }
-})
+});
+
+//Get a user info
+const getAUser = asyncHandler(async(req, res) => {
+        const {id} = req.params;
+        console.log(id);
+        try{
+                const aUser = await User.findById(id);
+                res.json(aUser);
+        }
+        catch(error){
+                throw new Error(error);
+        }
+});
 
 
-module.exports = {createUser, loginUserCtrl, getAllUsers};
+//Delete a user info
+const deleteAUser = asyncHandler(async(req, res) => {
+        const {id} = req.params;
+        try{
+                const deleteUser = await User.findByIdAndDelete(id);
+                console.log(deleteUser);
+        }
+        catch(error){
+                throw new Error(error);
+        }
+});
+
+module.exports = {createUser, loginUserCtrl, getAllUsers, getAUser, deleteAUser};
