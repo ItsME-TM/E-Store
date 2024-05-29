@@ -10,6 +10,7 @@ const createUser = asyncHandler(async (req, res) => {
                 //Create a new user
                 const newUser = User.create(req.body);
                 res.json(newUser);
+                console.log(newUser);
         }
         else {
                 //User already exists
@@ -93,6 +94,7 @@ const updateUser = asyncHandler(async(req, res) => {
                         }
                 );
                 console.log(updateUser);
+                res.json(updateUser);
         }
         catch(error){
                 throw new Error(error);
