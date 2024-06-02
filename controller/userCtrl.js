@@ -8,7 +8,7 @@ const createUser = asyncHandler(async (req, res) => {
         const findUser = await User.findOne({email:email});
         if(!findUser) {
                 //Create a new user
-                const newUser = User.create(req.body);
+                const newUser = await User.create(req.body);
                 res.json(newUser);
                 console.log(newUser);
         }
@@ -53,7 +53,7 @@ const getAllUsers = asyncHandler(async(req, res) => {
 
 //Get a user info
 const getAUser = asyncHandler(async(req, res) => {
-        const {id} = req.params;
+        const {_id} = req.user;
         console.log(id);
         try{
                 const aUser = await User.findById(id);
@@ -80,9 +80,9 @@ const deleteAUser = asyncHandler(async(req, res) => {
 
 //Update a user
 const updateUser = asyncHandler(async(req, res) => {
-        const {id} = req.params;
+        const {_id} = req.user;
         try{
-                const updateUser = await User.findByIdAndUpdate(id,
+                const updateUser = await User.findByIdAndUpdate(_id,
                         {
                                 firstname: req?.body?.firstname,
                                 lastname: req?.body?.lastname,
