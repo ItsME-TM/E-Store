@@ -53,7 +53,7 @@ const getAllUsers = asyncHandler(async(req, res) => {
 
 //Get a user info
 const getAUser = asyncHandler(async(req, res) => {
-        const {_id} = req.user;
+        const {id} = req.user;
         console.log(id);
         try{
                 const aUser = await User.findById(id);
@@ -100,4 +100,36 @@ const updateUser = asyncHandler(async(req, res) => {
                 throw new Error(error);
         }
 });
-module.exports = {createUser, loginUserCtrl, getAllUsers, getAUser, deleteAUser, updateUser};
+
+const blockUser = asyncHandler(async(req, res) => {
+        const {id} = req.params;
+        console.log("hit block");
+        try{
+                const block = await User.findByIdAndUpdate(id,{
+                        isBlocked : true,
+                },{
+                        new : true,
+                });
+                res.json({message: "User blocked"});
+        }catch(error){
+                throw new Error(error);
+        }
+});
+
+const unblockUser = asyncHandler(async (req, res) => {
+        const { id } = req.params;
+        console.log("hit unblock");
+        try {
+            const unblock = await User.findByIdAndUpdate(id, {
+                isBlocked: false,
+            }, {
+                new: true,
+            });
+            res.json({ message: "User unblocked"});
+        } catch (error) {
+            throw new Error(error);
+        }
+    });
+
+
+module.exports = {createUser, loginUserCtrl, getAllUsers, getAUser, deleteAUser, updateUser, blockUser, unblockUser};
